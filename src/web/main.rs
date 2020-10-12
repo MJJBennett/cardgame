@@ -43,6 +43,7 @@ async fn test_main(port: u16) {
             if let Err(e) = copy(reader, writer).await {
                 println!("Found a stream error! {}", e);
             }
+            println!("test_main: Finished copying message(s).");
         }
     }
 }

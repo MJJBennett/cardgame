@@ -18,4 +18,4 @@ structopt = "0.3.13"
 
 [[bin]]
 name = "server"
-path = "src/server/main.rs"
+path = "src/web/main.rs"

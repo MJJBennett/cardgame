@@ -9,6 +9,8 @@ use piston::event_loop::{EventSettings, Events};
 use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent};
 use piston::window::WindowSettings;
 
+use cardgame::web::client::run_tcp_test;
+
 pub struct App {
     gl: GlGraphics,
     rotation: f64,
@@ -44,7 +46,10 @@ impl App {
 }
 
 fn main() {
-    let opengl = OpenGL::V3_2;
+    run_tcp_test(8080);
+
+
+    /*let opengl = OpenGL::V3_2;
 
     let mut window: Window = WindowSettings::new("spinning-square", [200, 200])
         .graphics_api(opengl)
@@ -66,7 +71,7 @@ fn main() {
         if let Some(args) = e.update_args() {
             app.update(&args);
         }
-    }
+    }*/
 }
 
 

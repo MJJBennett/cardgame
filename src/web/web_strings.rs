@@ -24,7 +24,7 @@ impl WebStringError {
     }
 }
 
-pub async fn read_header(stream: &mut TcpStream) -> Result<usize, Box<dyn std::error::Error>> {
+async fn read_header(stream: &mut TcpStream) -> Result<usize, Box<dyn std::error::Error>> {
     // This method contains scary ASCII checks
     // Stay away!
     let mut buf = [0u8];

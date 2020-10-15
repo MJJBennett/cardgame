@@ -46,7 +46,7 @@ impl App {
 }
 
 fn main() {
-    run_tcp_test(8080);
+    run_tcp_test(3124);
 
 
     /*let opengl = OpenGL::V3_2;

@@ -15,7 +15,7 @@ pub async fn async_tcp_test(port: u16) -> Result<(), Box<dyn std::error::Error>>
 
     stream.initialize().await?;
 
-    println!("tcp_test: Receiving message.");
+    println!("tcp_test: Receiving messages.");
     let ret = match read_string(&mut stream).await {
         Err(e) => {
             println!("Read error: {}", e);
@@ -26,6 +26,7 @@ pub async fn async_tcp_test(port: u16) -> Result<(), Box<dyn std::error::Error>>
             s
         }
     };
+    println!("Result message: '{}'", ret);
     let ret2 = match read_string(&mut stream).await {
         Err(e) => {
             println!("Read error: {}", e);
@@ -36,9 +37,10 @@ pub async fn async_tcp_test(port: u16) -> Result<(), Box<dyn std::error::Error>>
             s
         }
     };
-
-    println!("Result message: '{}'", ret);
     println!("Result message: '{}'", ret2);
+
+    println!("tcp_test blocking forever");
+    let _ = read_string(&mut stream).await?;
 
     Ok(())
 }

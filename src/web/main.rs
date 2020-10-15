@@ -5,6 +5,8 @@ use async_std::{
     task,
 };
 use structopt::StructOpt;
+use cardgame::web::web_strings::*;
+use cardgame::web::proto::*;
 
 /* Web server functionality
  *
@@ -50,11 +52,29 @@ async fn test_main(ip: String, port: u16) {
     }
 }
 
-async fn accept_handler(stream: TcpStream) {
+async fn accept_handler(stream: TcpStream) -> Result<(), Box<dyn std::error::Error>> {
     let (reader, writer) = &mut (&stream, &stream);
-    if let Err(e) = copy(reader, writer).await {
+    /*if let Err(e) = copy(reader, writer).await {
         println!("Found a stream error! {}", e);
+    }*/
+    let res = read_string(reader).await?.1;
+    println!("Server got info: {}", res);
+    if let Some(s) = res.split(';').next() {
+        if s == TcpStream::version_string() {
+            println!("Successful connection!");
+            write_string(writer, String::from("You are connected!")).await?;
+        }
+        else {
+            println!("Wrong version!");
+            write_string(writer, String::from("Your version is incorrect!")).await?;
+        }
     }
+    else {
+        println!("Unsuccessful connection!");
+        write_string(writer, String::from("You are not connected!")).await?;
+    }
+
+    write_string(writer, String::from("Goodbye.")).await
 }
 
 async fn async_main(ip: String, port: u16) {
@@ -77,7 +97,9 @@ async fn async_main(ip: String, port: u16) {
     while let Some(stream) = incoming.next().await {
         if let Ok(stream) = stream {
             task::spawn(async move {
-                accept_handler(stream).await
+                if let Err(e) = accept_handler(stream).await {
+                    println!("Connection encoutered error: {}", e);
+                }
             });
         }
     }

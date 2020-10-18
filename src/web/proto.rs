@@ -31,3 +31,9 @@ impl Protocol for TcpStream {
         Ok(())
     }
 }
+
+pub mod ProtocolError {
+    pub fn incorrect_version() -> String { String::from("Client Disconnected - Incorrect version.") }
+    pub fn unknown_error() -> String { String::from("Client Disconnected - Unknown error..") }
+    pub fn successful_connection() -> String { String::from("Successful connection.") }
+}

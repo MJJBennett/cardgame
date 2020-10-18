@@ -1,0 +1,30 @@
+# Skip lines that start with common comment characters.
+   // Automatically strip leading spaces.
+
+define defaults:
+health from hand_count // pretty simple
+effect _internal:damage other 1;unblockable;
+hand 3
+effect greed:money 4 from bank;
+
+card attacker:
+effect hurt:damage other 1;
+effect shield:block ;
+
+card noble:
+effect noble_greed: money 2 from bank;
+block greed;
+
+card defender:
+block hurt;
+effect mercenary: money 1 from other;
+
+
+card thief:
+
+block 
+
+deck normal:
+3 attacker
+3 defender
+6 noble

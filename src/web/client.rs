@@ -26,6 +26,7 @@ pub async fn async_tcp_test(port: u16) -> Result<(), Box<dyn std::error::Error>>
             s
         }
     };
+    assert!(ret == ProtocolError::successful_connection());
     println!("Result message: '{}'", ret);
     let ret2 = match read_string(&mut stream).await {
         Err(e) => {
